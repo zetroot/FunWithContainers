@@ -58,13 +58,14 @@ jobs:
           source: "docker-compose.yml"
           target: "expt1"
           
-      - name: Execute SSH commmands on remote server
-        uses: JimCronqvist/action-ssh@master
+      - name: restart docker       
+        uses: cross-the-world/ssh-pipeline@master
         with:
-          hosts: ${{ secrets.SSH_USER_HOST }}
-          privateKey: ${{ secrets.SERVER_SSH_KEY }}
-          debug: false
-          command: |
-            cd expt1 \
-            docker-compose stop \
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          user: ${{ secrets.SERVER_SSH_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}          
+          connect_timeout: 10s
+          script: |
+            cd expt1
+            docker-compose stop &&
             docker-compose up -d
