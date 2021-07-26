@@ -1,0 +1,17 @@
+﻿version: '3'
+
+services:
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5430:5432
+    env_file:
+      - .env
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+  app:
+    image: ghcr.io/zetroot/funwithcontainers:master
+    ports:
+    - 80:80
+    - 443:443
+    
